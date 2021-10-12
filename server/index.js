@@ -64,13 +64,14 @@ app.put("/api/update", (req, res) => {
         newId=results[0].id;
         console.log("The id of the result is "+newId);
         if(err) console.log(err);
-    });
-    const sqlUpdate = "UPDATE movie_reviews SET movieName = ? WHERE id = ?";
-    console.log(newName);
-    console.log("The id of the result is "+newId);
-    db.query(sqlUpdate, [newName, newId], (err, results) => {
+        const sqlUpdate = "UPDATE movie_reviews SET movieName = ? WHERE id = ?";
+        console.log(newName);
+        console.log("The id of the result is "+newId);
+        db.query(sqlUpdate, [newName, newId], (err, results) => {
         if (err) console.log(err);
     });
+    });
+    
     console.log("Does it make it to here?");
 });
 
