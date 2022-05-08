@@ -23,6 +23,16 @@ app.get("/api/get", (req, res) => {
     })
 });
 
+app.put("/api/dosomething", (req, res) => {
+    newMovieName = "Hi!";
+    oldMovieName = "Ghost Busters";
+    const updateStatement = "UPDATE movie_reviews SET movieName=? WHERE movieName = ?;";
+    db.query(updateStatement, [newMovieName,oldMovieName], (err, result) => {
+        console.log(err);
+    })
+
+});
+
 
 app.post("/api/insert", (req, res) =>{
     const movieName = req.body.movieName
@@ -44,38 +54,37 @@ app.delete("/api/delete/:movieName", (req, res) => {
     console.log(name);
 });
 
-// app.put("/api/update", (req, res) => {
-//     const name = req.body.movieName;
-//     const review = req.body.movieReview;
-//     const sqlUpdate = "UPDATE movie_reviews SET movieReview = ? WHERE movieName = ?";
+app.put("/api/review", (req, res) => {
+    const name = req.body.movieName;
+    const review = req.body.movieReview;
+    const sqlUpdate = "UPDATE movie_reviews SET movieReview = ? WHERE movieName = ?";
 
-//     db.query(sqlUpdate, [review, name], (err, results) => {
-//         if (err) console.log(err);
-//     })
-//     console.log(name);
-// });
+    db.query(sqlUpdate, [review, name], (err, results) => {
+        if (err) console.log(err);
+    })
+    console.log(name);
+});
 
 app.put("/api/update", (req, res) => {
     const name = req.body.movieName;
-    const newName = req.body.movieReview;
+    const newName = req.body.movieNewName;
     let newId=0;
     const getId = "SELECT id FROM movie_reviews where movieName = ?;"
     db.query(getId, name, (err, results) => {
         newId=results[0].id;
-        console.log("The id of the result is "+newId);
+        // console.log("The id of the result is "+newId);
         if(err) console.log(err);
         const sqlUpdate = "UPDATE movie_reviews SET movieName = ? WHERE id = ?";
-        console.log(newName);
-        console.log("The id of the result is "+newId);
+        // console.log(newName);
+        // console.log("The id of the result is "+newId);
         db.query(sqlUpdate, [newName, newId], (err, results) => {
         if (err) console.log(err);
     });
     });
     
-    console.log("Does it make it to here?");
 });
 
     
 app.listen(3001, () => {
-    console.log("running on port 3001");
+    console.log("this is running on port 3001");
 })

@@ -8,6 +8,7 @@ function App() {
   const [review, setReview] = useState('');
   const [movieReviewList, setMovieList] = useState([]);
 
+
   const [newReview,setNewReview] = useState("");
   const [newName,setNewName] = useState("");
   useEffect(() => {
@@ -16,14 +17,6 @@ function App() {
       setMovieList(response.data);
     });
   }, []);
-
-  const ghostBusters = () => {
-    // console.log("It gets into the ghostbusters statement");
-    Axios.post("http://localhost:3001/api/insert", {
-      movieName: "Ghost Busters",
-      movieReview: "Great 80s Movie"
-    })
-  };
 
   const submitReview = () => {
     console.log("This is going to make an insert statement with the values of movieName "+movieName+" and Review of "+review);
@@ -39,24 +32,31 @@ function App() {
 
   }
 
+  const updateSingleMovie = () => {
+    // console.log("This is the name"+movie+" the new name "+newName);
+    Axios.put("http://localhost:3001/api/dosomething", {
+      // movieName: movie,
+      // movieNewName: newName,
+    });
+  }
+
   const deleteReview = (movie) => {
     Axios.delete(`http://localhost:3001/api/delete/${movie}`);
   }
 
   const updateReview = (movie) => {
-    Axios.put("http://localhost:3001/api/update", {
-      movieName: movie,
-      movieReview: newReview,
-    });
-    setNewReview("");
-  }
+     Axios.put("http://localhost:3001/api/review", {
+       movieName: movie,
+       movieReview: newReview,
+     });
+     setNewReview("");
+   }
 
   const updateName = (movie) => {
     console.log("This will be the new name "+newName);
-    console.log("This is the value of movie.  I want it to be the value of the existing movie.  Is it?  "+movie);
     Axios.put("http://localhost:3001/api/update", {
       movieName: movie,
-      movieReview: newName,
+      movieNewName: newName,
     });
     setNewName("");
   }
@@ -81,11 +81,13 @@ function App() {
       }}></input>
 
       <button onClick={submitReview}>Submit</button>
+      <p>Single Function Button:  Update movies Hi! to Ghost Busters   
+            <button onClick={updateSingleMovie}>Update</button>
+            </p>
       <br></br>
-      <button onClick={ghostBusters}>Add the movie Ghostbusters and a review</button>
-      {movieReviewList.map((val) => {
+      {movieReviewList.map((val, index) => {
         return (
-          <div className="card">
+          <div className="card" key={index}>
             <h1>
             {val.movieName}
             </h1>
@@ -105,24 +107,27 @@ function App() {
             Update Name</button>
             </p>
 
+            {
             <p>
             <input type="text" id="updateInput" onChange={(e)=>{
-              setNewReview(e.target.value);
-            }}></input>
-            <button onClick={
-              () => {updateReview(val.movieName)}
-
-            }>
-            Update Review</button>
+                setNewReview(e.target.value);
+             }}></input>
+             <button onClick={
+               () => {updateReview(val.movieName)}
+              }>
+               Update Review</button>
             </p>
+            }
           
             <p>
             <button onClick={
               () => {deleteReview(val.movieName)}              
             }>Delete Entire Movie</button>
             </p>
+
+            
        
-            </div>
+          </div>
             )
       })}
 

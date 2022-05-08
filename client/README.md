@@ -17,10 +17,10 @@ The path should be close to this
 `npm run devStart`
 5. Start another terminal window.
 6. Go to the "client" directory
-`cd ..`
+`cd /Users/kcarpenter/Documents/code/CRUD-APPLICATION`
 `cd client`
 The path should be close to this
-`/Users/kcarpenter/Documents/code/CRUD-APPLICATION/server`
+`/Users/kcarpenter/Documents/code/CRUD-APPLICATION/client`
 7. Start the client application
 `yarn start`
 8. Password for MySQL database is 'password'
